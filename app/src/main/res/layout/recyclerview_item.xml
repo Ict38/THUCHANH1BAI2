@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/rvImg"
+        android:layout_width="100dp"
+        android:layout_height="150dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Meo Dep Trai"
+        android:layout_toRightOf="@id/rvImg"
+        android:id="@+id/rvName"
+        android:textSize="24sp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12.00"
+        android:layout_below="@id/rvName"
+        android:layout_toRightOf="@id/rvImg"
+        android:id="@+id/rvPrice"
+        android:textSize="18sp"
+        />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Long ngan"
+        android:id="@+id/rvcb1"
+        android:layout_toRightOf="@id/rvImg"
+        android:layout_below="@id/rvPrice"
+        android:enabled="false"
+        />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tai Cup"
+        android:id="@+id/rvcb2"
+        android:layout_below="@id/rvcb1"
+        android:layout_toRightOf="@id/rvcb3"
+        android:enabled="false"
+        />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chan ngan"
+        android:id="@+id/rvcb3"
+        android:layout_below="@id/rvcb1"
+        android:layout_toRightOf="@id/rvImg"
+        android:enabled="false"
+
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="remove"
+        android:id="@+id/remove"
+        />
+
+</RelativeLayout>

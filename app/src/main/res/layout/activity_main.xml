@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1B6CAC"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="THUC HANH"
+        android:id="@+id/title"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/spinner"
+        android:layout_below="@id/title"
+        android:layout_margin="10dp"
+    />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinner"
+        android:text="Nhap ten con meo di bro"
+        android:id="@+id/name"
+        android:layout_margin="10dp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name"
+        android:id="@+id/price"
+        android:text="Nhap gia cua con meo"
+        android:layout_marginHorizontal="10dp"
+        />
+    <CheckBox
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Long ngan"
+        android:id="@+id/cb1"
+        android:layout_below="@id/price"
+        />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tai Cup"
+        android:id="@+id/cb2"
+        android:layout_below="@id/price"
+        android:layout_toRightOf="@id/cb1"
+        />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chan ngan"
+        android:id="@+id/cb3"
+        android:layout_below="@id/price"
+        android:layout_toRightOf="@id/cb2"
+        />
+    <LinearLayout
+        android:id="@+id/buttonrow"
+        android:layout_below="@id/cb1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add"
+            android:text="add"
+            />
+        <Button
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/update"
+            android:text="update"
+            android:enabled="false"
+            />
+    </LinearLayout>
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonrow"
+        android:id="@+id/search"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search"
+        android:id="@+id/rview"
+        />
+</RelativeLayout>
