@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements CatAdapter.CatIte
     private CheckBox cb1,cb2,cb3;
     private EditText name,price;
     private Button add,update;
+    private RatingBar ratingBar;
     private int rListPosition;
     private SearchView searchView;
     private int[] imgs = {R.drawable.cat1,R.drawable.cat2,
@@ -71,11 +73,12 @@ public class MainActivity extends AppCompatActivity implements CatAdapter.CatIte
                     else b2 = false;
                     if(cb3.isChecked()) b3 = true;
                     else b3 = false;
+                    int rating = (int) ratingBar.getRating();
                     if(catName.isEmpty() || catPrice.toString().isEmpty()){
                         Toast.makeText(MainActivity.this, "Vui Long Nhap Du", Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        adapter.add(new Cat(imgId, catName, catPrice, b1, b2, b3));
+                        adapter.add(new Cat(imgId, catName, catPrice, b1, b2, b3,rating));
                         Toast.makeText(MainActivity.this, "Them Con meo thanh cong", Toast.LENGTH_SHORT).show();
                         cb1.setChecked(false);
                         cb2.setChecked(false);
@@ -105,11 +108,12 @@ public class MainActivity extends AppCompatActivity implements CatAdapter.CatIte
                     else b2 = false;
                     if(cb3.isChecked()) b3 = true;
                     else b3 = false;
+                    int rating = (int) ratingBar.getRating();
                     if(catName.isEmpty() || catPrice.toString().isEmpty()){
                         Toast.makeText(MainActivity.this, "Vui Long Nhap Du", Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        adapter.update(rListPosition,new Cat(imgId, catName, catPrice, b1, b2, b3));
+                        adapter.update(rListPosition,new Cat(imgId, catName, catPrice, b1, b2, b3,rating));
                         Toast.makeText(MainActivity.this, "Cap Nhat con meo thanh cong", Toast.LENGTH_SHORT).show();
                         cb1.setChecked(false);
                         cb2.setChecked(false);
@@ -141,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements CatAdapter.CatIte
         update = findViewById(R.id.update);
         rView = findViewById(R.id.rview);
         searchView = findViewById(R.id.search);
+        ratingBar = findViewById(R.id.rate);
     }
 
     private void spinerAdapterSetup() {
@@ -150,8 +155,8 @@ public class MainActivity extends AppCompatActivity implements CatAdapter.CatIte
 
     private void recyclerViewSetup() {
         List<Cat> cats = new ArrayList<>();
-        Cat cat1 = new Cat(R.drawable.cat1,"Meo Dep Trai", 12.0,true,true,false);
-        Cat cat2 = new Cat(R.drawable.cat2,"Meo Xinh Gai", 13.0,false,true,false);
+        Cat cat1 = new Cat(R.drawable.cat1,"Meo Dep Trai", 12.0,true,true,false,4);
+        Cat cat2 = new Cat(R.drawable.cat2,"Meo Xinh Gai", 13.0,false,true,false,5);
         cats.add(cat1);
         cats.add(cat2);
         adapter = new CatAdapter(cats,this);
@@ -182,6 +187,7 @@ public class MainActivity extends AppCompatActivity implements CatAdapter.CatIte
         else cb2.setChecked(false);
         if (cat.getB3() == true) cb3.setChecked(true);
         else cb3.setChecked(false);
+        ratingBar.setRating(cat.getRating());
         add.setEnabled(false);
         update.setEnabled(true);
     }

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +60,7 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.CatViewHolder> {
         else holder.cb2.setChecked(false);
         if (cat.getB3() == true) holder.cb3.setChecked(true);
         else holder.cb3.setChecked(false);
+        holder.rated.setRating(cat.getRating());
     }
 
     @Override
@@ -91,6 +93,7 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.CatViewHolder> {
         private TextView name,price;
         private CheckBox cb1,cb2,cb3;
         private Button remove;
+        private RatingBar rated;
 
 
         public CatViewHolder(@NonNull View itemView) {
@@ -102,6 +105,7 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.CatViewHolder> {
             cb2 = itemView.findViewById(R.id.rvcb2);
             cb3 = itemView.findViewById(R.id.rvcb3);
             remove = itemView.findViewById(R.id.remove);
+            rated = itemView.findViewById(R.id.rated);
             itemView.setOnClickListener(this);
             remove.setOnClickListener(new View.OnClickListener() {
                 @Override
