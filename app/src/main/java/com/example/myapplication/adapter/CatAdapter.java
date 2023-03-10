@@ -21,13 +21,18 @@ import java.util.List;
 
 public class CatAdapter extends RecyclerView.Adapter<CatAdapter.CatViewHolder> {
 
-    private List<Cat> mList;
+    private List<Cat> mList, bList;
     private Context context;
     private CatItemListener catItemListener;
 
     public CatAdapter(List<Cat> mList, Context context) {
         this.mList = mList;
         this.context = context;
+        this.bList = mList;
+    }
+
+    public List<Cat> getbList() {
+        return bList;
     }
 
     public void setCatItemListener(CatItemListener catItemListener) {
@@ -63,6 +68,21 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.CatViewHolder> {
 
     public Cat getItemAt(int position) {
         return mList.get(position);
+    }
+
+    public void add(Cat cat) {
+        mList.add(cat);
+        notifyDataSetChanged();
+    }
+
+    public void update(int position,Cat cat) {
+        mList.set(position,cat);
+        notifyDataSetChanged();
+    }
+
+    public void filterList(List<Cat> filterList) {
+        mList = filterList;
+        notifyDataSetChanged();
     }
 
 

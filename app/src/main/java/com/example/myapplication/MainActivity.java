@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import com.example.myapplication.adapter.CatAdapter;
 import com.example.myapplication.adapter.SpinnerImageAdapter;
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements CatAdapter.CatIte
     private CheckBox cb1,cb2,cb3;
     private EditText name,price;
     private Button add,update;
+    private int rListPosition;
+    private SearchView searchView;
     private int[] imgs = {R.drawable.cat1,R.drawable.cat2,
             R.drawable.cat3,R.drawable.cat4, R.drawable.cat5};
 
@@ -38,17 +42,88 @@ public class MainActivity extends AppCompatActivity implements CatAdapter.CatIte
         setupAllVariable();
         spinerAdapterSetup();
         recyclerViewSetup();
+        searchView.setOnQueryTextListener(this);
+        name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                name.setText("");
+            }
+        });
 
+        price.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                price.setText("");
+            }
+        });
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Double catPrice;
+                try {
+                    String catName = name.getText().toString();
+                    catPrice = Double.parseDouble(price.getText().toString());
+                    Boolean b1,b2,b3;
+                    int imgId = imgs[spinner.getSelectedItemPosition()];
+                    if(cb1.isChecked()) b1 = true;
+                    else b1 = false;
+                    if(cb2.isChecked()) b2 = true;
+                    else b2 = false;
+                    if(cb3.isChecked()) b3 = true;
+                    else b3 = false;
+                    if(catName.isEmpty() || catPrice.toString().isEmpty()){
+                        Toast.makeText(MainActivity.this, "Vui Long Nhap Du", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        adapter.add(new Cat(imgId, catName, catPrice, b1, b2, b3));
+                        Toast.makeText(MainActivity.this, "Them Con meo thanh cong", Toast.LENGTH_SHORT).show();
+                        cb1.setChecked(false);
+                        cb2.setChecked(false);
+                        cb3.setChecked(false);
+                        name.setText("");
+                        price.setText("");
+                    }
 
+                } catch (NumberFormatException e){
+                    Toast.makeText(MainActivity.this, "Vui Long Nhap So", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         });
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Double catPrice;
+                try {
+                    String catName = name.getText().toString();
+                    catPrice = Double.parseDouble(price.getText().toString());
+                    Boolean b1,b2,b3;
+                    int imgId = imgs[spinner.getSelectedItemPosition()];
+                    if(cb1.isChecked()) b1 = true;
+                    else b1 = false;
+                    if(cb2.isChecked()) b2 = true;
+                    else b2 = false;
+                    if(cb3.isChecked()) b3 = true;
+                    else b3 = false;
+                    if(catName.isEmpty() || catPrice.toString().isEmpty()){
+                        Toast.makeText(MainActivity.this, "Vui Long Nhap Du", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        adapter.update(rListPosition,new Cat(imgId, catName, catPrice, b1, b2, b3));
+                        Toast.makeText(MainActivity.this, "Cap Nhat con meo thanh cong", Toast.LENGTH_SHORT).show();
+                        cb1.setChecked(false);
+                        cb2.setChecked(false);
+                        cb3.setChecked(false);
+                        name.setText("");
+                        price.setText("");
+                        add.setEnabled(true);
+                        update.setEnabled(false);
+                    }
 
+                } catch (NumberFormatException e){
+                    Toast.makeText(MainActivity.this, "Vui Long Nhap So", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
         });
     }
@@ -65,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements CatAdapter.CatIte
         add = findViewById(R.id.add);
         update = findViewById(R.id.update);
         rView = findViewById(R.id.rview);
+        searchView = findViewById(R.id.search);
     }
 
     private void spinerAdapterSetup() {
@@ -87,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements CatAdapter.CatIte
 
     @Override
     public void onItemClick(View view, int position) {
+        rListPosition = position;
         Log.e( "tag", "Passhere" );
         Cat cat = adapter.getItemAt(position);
         name.setText(cat.getName());
@@ -105,7 +182,8 @@ public class MainActivity extends AppCompatActivity implements CatAdapter.CatIte
         else cb2.setChecked(false);
         if (cat.getB3() == true) cb3.setChecked(true);
         else cb3.setChecked(false);
-
+        add.setEnabled(false);
+        update.setEnabled(true);
     }
 
     @Override
@@ -115,6 +193,22 @@ public class MainActivity extends AppCompatActivity implements CatAdapter.CatIte
 
     @Override
     public boolean onQueryTextChange(String s) {
+        filter(s);
         return false;
+    }
+
+    private void filter(String s) {
+        List<Cat> filterList = new ArrayList<>();
+        for(Cat i : adapter.getbList()){
+            if(i.getName().toLowerCase().contains(s.toLowerCase())){
+                filterList.add(i);
+            }
+        }
+        if(filterList.isEmpty()){
+            Toast.makeText(this, "NOT FOUND", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            adapter.filterList(filterList);
+        }
     }
 }
